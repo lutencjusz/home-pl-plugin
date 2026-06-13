@@ -1,38 +1,47 @@
 # Plugin `home-pl`
 
-Skille Claude Code do obsługi hostingu [home.pl](https://home.pl): komendy przez SSH, transfer plików (SFTP) i poczta (IMAP/SMTP). Uwierzytelnianie hasłem (port `22222`), hasła szyfrowane DPAPI.
+[PL](README_PL.md)
 
-## Skille
-- **home-pl-setup** — konfiguracja połączenia, instalacja modułów i test (`~/.home-pl/config.json`).
-- **home-pl-terminal** — wykonywanie komend przez SSH.
-- **home-pl-files** — transfer plików przez SFTP.
-- **home-pl-mail** — odczyt (IMAP) i wysyłka (SMTP) poczty.
+[Claude Code](https://claude.com/claude-code) skills for working with [home.pl](https://home.pl)
+hosting: running commands over SSH, transferring files over SFTP, and email (IMAP/SMTP).
+Password authentication (port `22222`), passwords encrypted with DPAPI.
 
-## Instalacja
+## Skills
+- **home-pl-setup** — configure the connection, install modules and test (`~/.home-pl/config.json`).
+- **home-pl-terminal** — run commands over SSH.
+- **home-pl-files** — transfer files over SFTP.
+- **home-pl-mail** — read (IMAP) and send (SMTP) email.
 
-Instalacja jest dwuczęściowa: najpierw skille przez marketplace Claude Code, potem moduły PowerShell (robi to skill `home-pl-setup`).
+## Installation (two parts)
 
-```
-# 1) Skille — marketplace Claude Code
+Installation has two parts: first the skills via the Claude Code marketplace, then the
+PowerShell modules (handled by the `home-pl-setup` skill).
+
+```text
+# 1) Skills — Claude Code marketplace
 /plugin marketplace add lutencjusz/home-pl-plugin
 /plugin install home-pl@home-pl-plugin
 
-# 2) Moduły PowerShell + konfiguracja — uruchom skill home-pl-setup
-#    (instaluje Posh-SSH i Mailozaurr z PowerShell Gallery, tworzy ~/.home-pl/config.json)
+# 2) PowerShell modules + configuration — run the home-pl-setup skill
+#    (installs Posh-SSH and Mailozaurr from the PowerShell Gallery, creates ~/.home-pl/config.json)
 ```
 
-Pominięcie kroku 2 to najczęstszy powód „zainstalowałem, a nie działa".
+Skipping step 2 is the most common reason for "I installed it but it doesn't work".
 
-### Instalacja ręczna (development)
-Sklonuj repo i ustaw zmienną `CLAUDE_PLUGIN_ROOT` na katalog pluginu (skille importują moduł przez `$env:CLAUDE_PLUGIN_ROOT\lib\home-pl.psm1`; po instalacji z marketplace Claude Code ustawia ją automatycznie). Alternatywnie sklonuj do domyślnej ścieżki fallback `C:\claude\home-pl-plugin`.
+### Manual install (development)
+Clone the repo and set the `CLAUDE_PLUGIN_ROOT` variable to the plugin directory (the skills
+import the module via `$env:CLAUDE_PLUGIN_ROOT\lib\home-pl.psm1`; the marketplace install sets
+it automatically). Alternatively, clone to the default fallback path `C:\claude\home-pl-plugin`.
 
-## Wymagania
-- Windows z PowerShell 7 (`pwsh`).
-- Moduły PowerShell Gallery: **Posh-SSH**, **Mailozaurr** (instaluje skill home-pl-setup).
-- Konto home.pl z dostępem SSH (plany: Biznes, Profesjonalny, Premium, WordPress SSD Prof./Premium, dedykowany).
+## Requirements
+- Windows with PowerShell 7 (`pwsh`).
+- PowerShell Gallery modules: **Posh-SSH**, **Mailozaurr** (installed by the home-pl-setup skill).
+- A home.pl account with SSH access (plans: Biznes, Profesjonalny, Premium, WordPress SSD Prof./Premium, dedicated).
 
-## Konfiguracja
-Uruchom skill **home-pl-setup** — utworzy `~/.home-pl/config.json` (`%USERPROFILE%\.home-pl\config.json`, hasła szyfrowane DPAPI). Wzór pól znajdziesz w [`config.example.json`](config.example.json):
+## Configuration
+Run the **home-pl-setup** skill — it creates `~/.home-pl/config.json`
+(`%USERPROFILE%\.home-pl\config.json`, passwords encrypted with DPAPI). See the field template
+in [`config.example.json`](config.example.json):
 ```json
 {
   "host": "serwerNNNNNN.home.pl",
@@ -43,22 +52,25 @@ Uruchom skill **home-pl-setup** — utworzy `~/.home-pl/config.json` (`%USERPROF
   "imapPort": 993,
   "smtpHost": "poczta.home.pl",
   "smtpPort": 465,
-  "mailUser": "nazwa@twojadomena.pl",
+  "mailUser": "name@yourdomain.pl",
   "mailPasswordEnc": "<DPAPI>"
 }
 ```
 
-## ⚠️ Bezpieczeństwo
-- **Nie commituj** `config.json` ani haseł — `.gitignore` chroni je w repo, a plik konfiguracyjny żyje poza repo (`~/.home-pl`). Commitowany jest tylko `config.example.json` (placeholdery).
-- Hasła szyfrowane DPAPI — odczyt tylko na koncie Windows, które je zapisało.
-- Logowanie wyłącznie na porcie `22222` (port 22 nie działa w home.pl).
-- Nie ujawniaj haseł ani treści wrażliwych w logach/odpowiedziach.
+## ⚠️ Security
+- **Do not commit** `config.json` or any passwords — `.gitignore` protects them in the repo, and
+  the config file lives outside the repo (`~/.home-pl`). Only `config.example.json` (placeholders)
+  is committed.
+- Passwords are encrypted with DPAPI — readable only by the Windows account that wrote them.
+- Login only on port `22222` (port 22 does not work on home.pl).
+- Never reveal passwords or sensitive content in logs/responses.
 
-## Testy
+## Tests
 ```powershell
 pwsh -NoProfile -Command "Invoke-Pester -Path tests/home-pl.Tests.ps1 -Output Detailed"
 ```
-Testy są offline — sprawdzają buildery, walidację configu, round-trip DPAPI i logikę filtrów (bez łączenia z serwerem).
+Tests run offline — they check the builders, config validation, DPAPI round-trip and filter logic
+(without connecting to the server).
 
-## Licencja
+## License
 [MIT](LICENSE)
