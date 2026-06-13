@@ -1,0 +1,13 @@
+{
+  "_comment": "WZOR konfiguracji. Skopiuj do %USERPROFILE%\\.home-pl\\config.json i wypelnij wlasnymi danymi. NIGDY nie commituj prawdziwego config.json — hasla generuje skill home-pl-setup (DPAPI).",
+  "host": "serwerNNNNNN.home.pl",
+  "port": 22222,
+  "user": "serwerNNNNNN",
+  "passwordEnc": "<DPAPI — generowane przez Protect-HomePlSecret, nie wpisuj recznie>",
+  "imapHost": "imap.home.pl",
+  "imapPort": 993,
+  "smtpHost": "poczta.home.pl",
+  "smtpPort": 465,
+  "mailUser": "nazwa@twojadomena.pl",
+  "mailPasswordEnc": "<DPAPI — generowane przez Protect-HomePlSecret, nie wpisuj recznie>"
+}

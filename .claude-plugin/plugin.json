@@ -1,0 +1,13 @@
+{
+  "name": "home-pl",
+  "version": "0.1.0",
+  "description": "Obsługa hostingu home.pl: komendy przez SSH, transfer plików SFTP i poczta IMAP/SMTP.",
+  "author": {
+    "name": "lutencjusz",
+    "url": "https://github.com/lutencjusz"
+  },
+  "homepage": "https://github.com/lutencjusz/home-pl-plugin",
+  "repository": "https://github.com/lutencjusz/home-pl-plugin",
+  "license": "MIT",
+  "keywords": ["home.pl", "hosting", "ssh", "sftp", "imap", "smtp", "poczta"]
+}

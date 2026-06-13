@@ -1,0 +1,14 @@
+﻿# Nigdy nie commituj sekretów ani lokalnej konfiguracji home.pl
+config.json
+.env
+*.env
+*.key
+*.pem
+.home-pl/
+# config.example.json (wzor z placeholderami) JEST commitowany — nie pasuje do "config.json"
+
+# Stan IDE
+.idea/
+
+# Lokalne ustawienia/uprawnienia Claude Code (zawieraja prywatne sciezki)
+.claude/settings.local.json

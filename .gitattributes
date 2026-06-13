@@ -1,0 +1,2 @@
+# Normalizuj konce linii do LF w repo (ujednolica working tree, ucisza ostrzezenia CRLF)
+* text=auto eol=lf

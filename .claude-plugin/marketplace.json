@@ -1,0 +1,12 @@
+{
+  "name": "home-pl-plugin",
+  "owner": { "name": "lutencjusz", "url": "https://github.com/lutencjusz" },
+  "plugins": [
+    {
+      "name": "home-pl",
+      "source": "./",
+      "description": "Obsługa hostingu home.pl: komendy przez SSH, transfer plików SFTP i poczta IMAP/SMTP.",
+      "version": "0.1.0"
+    }
+  ]
+}
