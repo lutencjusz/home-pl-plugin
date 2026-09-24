@@ -168,6 +168,16 @@ function Get-HomePlFile {
     }
 }
 
+function Get-HomePlMailFrom {
+    # Adres nadawcy: opcjonalne pole mailFrom (gdy login IMAP/SMTP rozni sie od adresu,
+    # np. alias we wlasnej domenie u dostawcy typu Fastmail), w przeciwnym razie mailUser.
+    [CmdletBinding()]
+    param([Parameter(Mandatory)]$Config)
+    $hasFrom = $Config.PSObject.Properties.Name -contains 'mailFrom'
+    if ($hasFrom -and -not [string]::IsNullOrWhiteSpace([string]$Config.mailFrom)) { return [string]$Config.mailFrom }
+    return [string]$Config.mailUser
+}
+
 function New-HomePlMailInfo {
     [CmdletBinding()]
     param(
@@ -179,7 +189,7 @@ function New-HomePlMailInfo {
         Tool    = 'smtp'
         Server  = $Config.smtpHost
         Port    = [int]$Config.smtpPort
-        From    = $Config.mailUser
+        From    = Get-HomePlMailFrom -Config $Config
         To      = $To
         Subject = $Subject
     }
@@ -204,7 +214,7 @@ function Send-HomePlMail {
     # Send-EmailMessage: -Credential trafia do zestawow OAuth/Graph; dla zwyklego SMTP
     # uzywamy zestawu SecureString (-Username/-Password jako stringi).
     $params = @{
-        From                = $Config.mailUser
+        From                = Get-HomePlMailFrom -Config $Config
         To                  = $To
         Subject             = $Subject
         Server              = $Config.smtpHost

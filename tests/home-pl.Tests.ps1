@@ -203,6 +203,27 @@ Describe 'Send-HomePlMail -DryRun' {
         $i = Send-HomePlMail -To 'jan@x.pl' -Subject 'T' -Body 'B' -Config $script:cfg -DryRun
         ($i | ConvertTo-Json) | Should -Not -Match 'mailPass'
     }
+    It 'nadawca = mailFrom, gdy login (mailUser) rozni sie od adresu nadawcy' {
+        $c = $script:cfg.PSObject.Copy()
+        $c.mailUser = 'login@fastmail.com'
+        $c | Add-Member -NotePropertyName mailFrom -NotePropertyValue 'kontakt@domena.pl'
+        $i = Send-HomePlMail -To 'jan@x.pl' -Subject 'T' -Body 'B' -Config $c -DryRun
+        $i.From | Should -Be 'kontakt@domena.pl'
+    }
+    It 'pusty mailFrom = nadawca mailUser' {
+        $c = $script:cfg.PSObject.Copy()
+        $c | Add-Member -NotePropertyName mailFrom -NotePropertyValue ''
+        (Send-HomePlMail -To 'jan@x.pl' -Subject 'T' -Body 'B' -Config $c -DryRun).From | Should -Be 'kontakt@domena.pl'
+    }
+}
+
+Describe 'Get-HomePlMailFrom' {
+    It 'bez pola mailFrom zwraca mailUser' {
+        Get-HomePlMailFrom -Config ([pscustomobject]@{ mailUser = 'a@b.pl' }) | Should -Be 'a@b.pl'
+    }
+    It 'z polem mailFrom zwraca mailFrom' {
+        Get-HomePlMailFrom -Config ([pscustomobject]@{ mailUser = 'login@fastmail.com'; mailFrom = 'a@b.pl' }) | Should -Be 'a@b.pl'
+    }
 }
 
 Describe 'Select-HomePlMail (filtr)' {

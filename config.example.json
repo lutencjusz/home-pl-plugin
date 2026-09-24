@@ -9,5 +9,6 @@
   "smtpHost": "poczta.home.pl",
   "smtpPort": 465,
   "mailUser": "nazwa@twojadomena.pl",
+  "mailFrom": "",
   "mailPasswordEnc": "<DPAPI — generowane przez Protect-HomePlSecret, nie wpisuj recznie>"
 }

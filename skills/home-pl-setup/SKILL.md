@@ -23,6 +23,7 @@ Plik `~/.home-pl/config.json` (`%USERPROFILE%\.home-pl\config.json`, poza repozy
 | `smtpPort` | port SMTP | `465` |
 | `mailUser` | adres skrzynki | `nazwa@twojadomena.pl` |
 | `mailPasswordEnc` | hasło skrzynki (DPAPI) | użytkownik |
+| `mailFrom` | *(opcjonalne)* adres nadawcy, gdy login IMAP/SMTP (`mailUser`) jest inny niż adres — np. alias we własnej domenie u dostawcy typu Fastmail | puste = `mailUser` |
 
 ## Procedura
 
